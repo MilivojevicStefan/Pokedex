@@ -4,44 +4,36 @@
 //
 //  Created by Стефан  Миливоевич on 5.10.22..
 //
-
 import UIKit
 
-class MainScreen: UIViewController, UITableViewDelegate, UITableViewDataSource  {
-   
+class PokemonListViewController: UIViewController {
+
     
+    private var data = [String()]
+    private let titleText = UILabel()
+    private let tableView = UITableView()
     
-    var data = [String()]
-    let titleText = UILabel()
-    let table = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        for x in 1...100 {
-            data.append("Number \(x)")
-        }
+        
         view.backgroundColor = .white
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        table.delegate = self
-        table.dataSource = self
-        addElements()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        addElementsToView()
+        addCards()
         
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//
-//
-//    }
-    
-    func addElements() {
+    private func addElementsToView() {
         view.addSubview(titleText)
         titleText.text = "PokeDex"
         titleText.font = UIFont.boldSystemFont(ofSize: 48)
         titleText.textColor = .black
         titleText.translatesAutoresizingMaskIntoConstraints = false
-        table.frame = view.bounds
-        view.addSubview(table)
+        tableView.frame = view.bounds
+        view.addSubview(tableView)
         
         
         
@@ -61,6 +53,14 @@ class MainScreen: UIViewController, UITableViewDelegate, UITableViewDataSource  
         cell.textLabel?.text = data[indexPath.row]
         return cell
     }
+    
+    private func addCards() {
+        for x in 1...100 {
+            data.append("Number \(x)")
+        }
+    }
 
 }
 
+extension PokemonListViewController: UITableViewDelegate, UITableViewDataSource {
+}
